@@ -7,51 +7,22 @@
 </style>
 <script type="text/javascript">
 
-let touchstartX = 0
+llet touchstartX = 0
 let touchendX = 0
     
-function whichDirection() {
-  if (touchendX < touchstartX) document.querySelector(".result").innerHTML = "Swipe nach Links";
-  if (touchendX > touchstartX) document.querySelector(".result").innerHTML = "Swipe nach Rechts";
+function checkDirection() {
+  if (touchendX < touchstartX) alert('swiped left!')
+  if (touchendX > touchstartX) alert('swiped right!')
 }
 
-document.querySelector(".swipeDetector").addEventListener('touchstart', evt => {
-  touchstartX = evt.changedTouches[0].screenX;
+document.addEventListener('touchstart', e => {
+  touchstartX = e.changedTouches[0].screenX
 })
 
-document.querySelector(".swipeDetector").addEventListener('touchend', evt => {
-  touchendX = evt.changedTouches[0].screenX;
-  whichDirection();
-});
-
-const  startmove = document.querySelector('.startmove');
-const  moves = document.getElementById('moves');
-let  startx = 0;
-let  starty = 0;
-let  dist = 0;
-
-startmove.addEventListener('touchstart', function(eve){
-	const  touchobj = eve.changedTouches[0]; // erster Finger
-	startx = parseInt(touchobj.clientX); // X/Y-Koordinaten relativ zum Viewport
-	starty = parseInt(touchobj.clientY);
-	moves.innerHTML = 'touchstart bei ClientX: ' + startx + 'px ClientY: ' + starty + "px";
-	eve.preventDefault();
-});
-
-startmove.addEventListener('touchmove', function(eve){
-	const  touchobj = eve.changedTouches[0]; // erster Finger
-	const  distx = parseInt(touchobj.clientX) - startx;
-	const  disty = parseInt(touchobj.clientY) - starty;
-	moves.innerHTML = 'touchmove horizontal: ' + distx + 'px vertikal: ' + disty + 'px'; 
-	eve.preventDefault();
-});
-
-startmove.addEventListener('touchend', function(eve){
-	const touchobj = eve.changedTouches[0]; // reference first touch point for this event
-	moves.innerHTML = 'touchend bei X-Koordinate: ' + touchobj.clientX + 'px Y-Koordinate: ' + touchobj.clientY + 'px';
-	eve.preventDefault();
-});
-
+document.addEventListener('touchend', e => {
+  touchendX = e.changedTouches[0].screenX
+  checkDirection()
+})
 
 </script>
 </head><body text-align="center">
@@ -62,8 +33,4 @@ Left: <input type="text" name="lleft" value="0"></input><br>
 Right: <input type="text" name="rright" value="0"></input>
 </form>
 
-<div class="result"></div>
-<div class="swipeDetector lock-screen" draggable="true"></div>
-
 </body></html>
-s
