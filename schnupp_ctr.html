@@ -17,7 +17,7 @@ let touchstartX = 0;
 let touchendX = 0;
     
 function checkDirection() {
-  if (touchendX < touchstartX) {alert('swiped left!'+leftc);leftc++;document.f1.lleft.value=leftc;};
+  if (touchendX < touchstartX) {alert('swiped left!'+leftc);leftc++;document.getElementById("lc").value = leftc;};
   if (touchendX > touchstartX) alert('swiped right!');
 };
 
@@ -32,11 +32,11 @@ document.addEventListener('touchend', e => {
 
 </script>
 </head><body text-align="center">
- <h1>Schnuppenz&auml;hler 5</h1>
+ <h1>Schnuppenz&auml;hler 5.1</h1>
 <form name="f1">
 <button type="submit">Und Los!</button><br>
-Left: <input type="text" name="lleft" value="0"></input><br>
-Right: <input type="text" name="rright" value="0"></input>
+Left: <input type="text" id="lc" name="lleft" value="0"></input><br>
+Right: <input type="text" id="rc" name="rright" value="0"></input>
 </form>
 
 </body></html>
