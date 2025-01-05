@@ -13,11 +13,6 @@ let rightc = 0;
 
 let touchstartX = 0;
 let touchendX = 0;
-    
-function checkDirection() {
-  if (touchendX < touchstartX) {leftc++;document.getElementById("lc").value = leftc;};
-  if (touchendX > touchstartX) {rightc++;document.getElementById("rc").value = rightc;};
-};
 
 document.addEventListener('touchstart', e => {
   touchstartX = e.changedTouches[0].screenX;
@@ -27,13 +22,66 @@ document.addEventListener('touchend', e => {
   touchendX = e.changedTouches[0].screenX;
   checkDirection();
 });
+    
+function checkDirection() {
+  if (touchendX < touchstartX) {leftc++;document.getElementById("lc").value = leftc;};
+  if (touchendX > touchstartX) {rightc++;document.getElementById("rc").value = rightc;};
+};
+
+function add_butt_l {leftc++;  document.getElementById("lc").value = leftc;  }
+function add_butt_r {rightc++; document.getElementById("rc").value = rightc; }
+
+//
+// Cookie-functions
+//
+
+function init() {
+  var besuch = zaehlerstand();
+  var ausgabe = document.getElementById('info');
+  ausgabe.innerHTML = besuch;
+}
+
+function getCookieValue(a) {
+   const b = document.cookie.match('(^|;)\\s*' + a + '\\s*=\\s*([^;]+)');
+   return b ? b.pop() : '';
+}
+
+function wertSetzen (Bezeichner, Wert, Verfall) {
+  var jetzt = new Date();
+  var Auszeit = new Date(jetzt.getTime() + Verfall);
+  document.cookie = Bezeichner + "=" + Wert + "; expires=" + Auszeit.toGMTString() + ";";
+}
+
+function zaehlerstand () {
+  var Verfallszeit = 1000 * 60 * 60 * 24 * 365;
+  var Anzahl = wertHolen();
+  var Zaehler = 0;
+  if (Anzahl != "") {
+    Zaehler = parseInt(Anzahl) || 0;
+  }
+  Zaehler = Zaehler + 1;
+  wertSetzen("Zaehler", Zaehler, Verfallszeit);
+  return (Zaehler);
+}
 
 </script>
 </head><body text-align="center">
  <h1>Schnuppenz&auml;hler 5.2</h1>
 <form name="f1">
+<button onclick="add_butt_l()">L+1</button>
 Left: <input type="text" id="lc" name="lleft" value="0"></input><br>
+<button onclick="add_butt_r()">R+1</button>
 Right: <input type="text" id="rc" name="rright" value="0"></input>
 </form>
 
-</body></html>
+</body>
+<script>
+
+leftc = getCookieValue("left_mem");
+tightc = getCookieValue("right_mem");
+
+document.getElementById("lc").value = leftc;
+document.getElementById("rc").value = rightc;
+
+</script>
+</html>
