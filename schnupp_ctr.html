@@ -8,8 +8,8 @@
 
 <script>
 
-let leftc = 0;
-let rightc = 0;
+let l_ctr = 0;
+let r_ctr = 0;
 
 let touchstartX = 0;
 let touchendX = 0;
@@ -24,64 +24,55 @@ document.addEventListener('touchend', e => {
 });
     
 function checkDirection() {
-  if (touchendX < touchstartX) {leftc++;document.getElementById("lc").value = leftc;};
-  if (touchendX > touchstartX) {rightc++;document.getElementById("rc").value = rightc;};
+  if (touchendX < touchstartX) { inc_l_ctr() };
+  if (touchendX > touchstartX) { inc_r_ctr() };
 };
 
-function add_butt_l {leftc++;  document.getElementById("lc").value = leftc;  }
-function add_butt_r {rightc++; document.getElementById("rc").value = rightc; }
+function inc_l_ctr() {
+    l_ctr++; 
+    document.getElementById("lc").value = l_ctr;  
+    setCookieValue("mem_l_ctr", l_ctr);
+}
+
+function inc_r_ctr() {
+	r_ctr++; 
+	document.getElementById("rc").value = r_ctr;
+    setCookieValue("mem_r_ctr", r_ctr);
+}
 
 //
 // Cookie-functions
 //
-
-function init() {
-  var besuch = zaehlerstand();
-  var ausgabe = document.getElementById('info');
-  ausgabe.innerHTML = besuch;
-}
 
 function getCookieValue(a) {
    const b = document.cookie.match('(^|;)\\s*' + a + '\\s*=\\s*([^;]+)');
    return b ? b.pop() : '';
 }
 
-function wertSetzen (Bezeichner, Wert, Verfall) {
+function setCookieValue (Bezeichner, Wert) {
   var jetzt = new Date();
-  var Auszeit = new Date(jetzt.getTime() + Verfall);
+  var Auszeit = new Date(jetzt.getTime() + 864000);  // 10 days
   document.cookie = Bezeichner + "=" + Wert + "; expires=" + Auszeit.toGMTString() + ";";
-}
-
-function zaehlerstand () {
-  var Verfallszeit = 1000 * 60 * 60 * 24 * 365;
-  var Anzahl = wertHolen();
-  var Zaehler = 0;
-  if (Anzahl != "") {
-    Zaehler = parseInt(Anzahl) || 0;
-  }
-  Zaehler = Zaehler + 1;
-  wertSetzen("Zaehler", Zaehler, Verfallszeit);
-  return (Zaehler);
 }
 
 </script>
 </head><body text-align="center">
- <h1>Schnuppenz&auml;hler 5.2</h1>
+ <h1>Schnuppenz&auml;hler 6.0</h1>
 <form name="f1">
-<button onclick="add_butt_l()">L+1</button>
+<button type="button" onclick="inc_l_ctr();">L+1</button>
 Left: <input type="text" id="lc" name="lleft" value="0"></input><br>
-<button onclick="add_butt_r()">R+1</button>
+<button type="button" onclick="inc_r_ctr();">R+1</button>
 Right: <input type="text" id="rc" name="rright" value="0"></input>
 </form>
-
 </body>
+
 <script>
 
-leftc = getCookieValue("left_mem");
-tightc = getCookieValue("right_mem");
+l_ctr = getCookieValue("mem_l_ctr");
+document.getElementById("lc").value = l_ctr;
 
-document.getElementById("lc").value = leftc;
-document.getElementById("rc").value = rightc;
+r_ctr = getCookieValue("mem_r_ctr");
+document.getElementById("rc").value = r_ctr;
 
 </script>
 </html>
