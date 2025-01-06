@@ -1,7 +1,7 @@
-<html><head><title>Schnuppenzähler</title>
+<html><head><title>Schnuppenz&auml;hler</title>
 <style type="text/css">
 <!--
-  body { font-family:arial;  text-align:center }
+  body    { font-family:arial;  text-align:center; background-color:blrack }
   td,h1   { text-align:center }
 //-->
 </style>
@@ -14,6 +14,9 @@ let r_ctr = 0;
 let touchstartX = 0;
 let touchendX = 0;
 
+var l_audio = new Audio('wrong.mp3');
+
+   
 document.addEventListener('touchstart', e => {
   touchstartX = e.changedTouches[0].screenX;
 });
@@ -30,14 +33,23 @@ function checkDirection() {
 
 function inc_l_ctr() {
     l_ctr++; 
-    document.getElementById("lc").value = l_ctr;  
+    disp_l_ctr();  
     setCookieValue("mem_l_ctr", l_ctr);
 }
 
 function inc_r_ctr() {
 	r_ctr++; 
-	document.getElementById("rc").value = r_ctr;
+	disp_r_ctr();
     setCookieValue("mem_r_ctr", r_ctr);
+}
+
+function disp_l_ctr() {
+	document.getElementById("lc").value = l_ctr;
+	l_audio.play();
+}
+
+function disp_r_ctr() {
+	document.getElementById("rc").value = r_ctr;
 }
 
 //
@@ -57,22 +69,23 @@ function setCookieValue (Bezeichner, Wert) {
 
 </script>
 </head><body text-align="center">
- <h1>Schnuppenz&auml;hler 6.0</h1>
+ <h1>Schnuppenz&auml;hler 6.1</h1>
 <form name="f1">
 <button type="button" onclick="inc_l_ctr();">L+1</button>
 Left: <input type="text" id="lc" name="lleft" value="0"></input><br>
 <button type="button" onclick="inc_r_ctr();">R+1</button>
-Right: <input type="text" id="rc" name="rright" value="0"></input>
+Right: <input type="text" id="rc" name="rright" value="0"></input><br>
+<textarea id="log"></textarea>
 </form>
 </body>
 
 <script>
 
 l_ctr = getCookieValue("mem_l_ctr");
-document.getElementById("lc").value = l_ctr;
+disp_l_ctr();
 
 r_ctr = getCookieValue("mem_r_ctr");
-document.getElementById("rc").value = r_ctr;
+disp_r_ctr();
 
 </script>
 </html>
